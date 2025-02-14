@@ -322,15 +322,15 @@ object SkillApi {
 
     private fun updateSkillInfo(existingLevel: SkillInfo, level: Int, currentXP: Long, maxXP: Long, totalXP: Long, gained: String) {
         val cap = activeSkill?.maxLevel
-        val add = if (level >= cap ?: 0) {
-            when (cap) {
-                50 -> XP_NEEDED_FOR_50
-                60 -> XP_NEEDED_FOR_60
-                else -> 0
+        val add = cap?.let {
+            if (level >= it) {
+                when (it) {
+                    50 -> XP_NEEDED_FOR_50
+                    60 -> XP_NEEDED_FOR_60
+                    else -> 0
+                }
             }
-        } else {
-            0
-        }
+        } ?: 0
 
         val (levelOverflow, currentOverflow, currentMaxOverflow, totalOverflow) =
             calculateSkillLevel(totalXP + add, cap)
