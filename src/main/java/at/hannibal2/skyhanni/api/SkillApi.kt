@@ -332,7 +332,7 @@ object SkillApi {
         } ?: 0
 
         val (levelOverflow, currentOverflow, currentMaxOverflow, totalOverflow) =
-            calculateSkillLevel(totalXP + add, cap)
+            calculateSkillLevel(totalXP + add, cap ?: 60)
 
         existingLevel.apply {
             this.totalXp = totalXP
