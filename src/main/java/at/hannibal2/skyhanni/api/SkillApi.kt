@@ -329,6 +329,9 @@ object SkillApi {
                     60 -> XP_NEEDED_FOR_60
                 }
             }
+            else {
+                0
+            }
         } ?: 0
 
         val (levelOverflow, currentOverflow, currentMaxOverflow, totalOverflow) =
