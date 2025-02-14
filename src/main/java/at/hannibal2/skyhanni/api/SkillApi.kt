@@ -321,7 +321,7 @@ object SkillApi {
     }
 
     private fun updateSkillInfo(existingLevel: SkillInfo, level: Int, currentXP: Long, maxXP: Long, totalXP: Long, gained: String) {
-        val cap = activeSkill?.maxLevel ?: 0 // null value will never be used
+        val cap = activeSkill?.maxLevel ?: 60
         val add = if (level >= cap) {
             when (cap) {
                 50 -> XP_NEEDED_FOR_50
@@ -333,7 +333,7 @@ object SkillApi {
         }
 
         val (levelOverflow, currentOverflow, currentMaxOverflow, totalOverflow) =
-            calculateSkillLevel(totalXP + add, cap ?: 60)
+            calculateSkillLevel(totalXP + add, cap)
 
         existingLevel.apply {
             this.totalXp = totalXP
