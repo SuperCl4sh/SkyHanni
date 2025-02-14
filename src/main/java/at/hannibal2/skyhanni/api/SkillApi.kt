@@ -279,8 +279,10 @@ object SkillApi {
             }
 
             maxSkillTabPattern.matchMatcher(line) {
-                tablistLevel = group("level").toInt()
-                if (group("type").lowercase() != activeSkill?.lowercaseName) tablistLevel = null
+                if (group("type") == skillType.displayName) {
+                    tablistLevel = group("level").toInt()
+                    if (group("type").lowercase() != activeSkill?.lowercaseName) tablistLevel = null
+                }
             }
 
             skillTabNoPercentPattern.matchMatcher(line) {
