@@ -329,8 +329,7 @@ object SkillApi {
                     60 -> XP_NEEDED_FOR_60
                     else -> 0
                 }
-            }
-            else {
+            } else {
                 0
             }
         } ?: 0
