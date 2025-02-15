@@ -327,6 +327,7 @@ object SkillApi {
                 when (it) {
                     50 -> XP_NEEDED_FOR_50
                     60 -> XP_NEEDED_FOR_60
+                    else -> 0
                 }
             }
             else {
