@@ -35,7 +35,7 @@ object MobHighlight {
     fun onMobSpawn(event: MobEvent.Spawn.SkyblockMob) {
 
         val mob = event.mob
-        if (config.runicMobHighlight && mob.isRunic && mob.mobType == Mob.Type.BASIC) {
+        if (config.runicMobHighlight && mob.isRunic) {
             mob.highlight(LorenzColor.LIGHT_PURPLE.toColor()) { config.runicMobHighlight }
         }
     }

@@ -115,7 +115,8 @@ class Mob(
 
     val isCorrupted get() = !RiftApi.inRift() && baseEntity.isCorrupted() // Can change
     val isRunic = !RiftApi.inRift() &&
-        armorStand?.getNameAsString()?.startsWith("§5") == true // Does not Change
+        armorStand?.getNameAsString()?.startsWith("§5") == true &&
+        mobType == Mob.Type.BASIC// Does not Change
 
     fun isInRender() = baseEntity.distanceToPlayer() < MobData.ENTITY_RENDER_RANGE_IN_BLOCKS
 
