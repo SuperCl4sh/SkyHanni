@@ -10,7 +10,6 @@ import at.hannibal2.skyhanni.utils.ColorUtils.addAlpha
 import at.hannibal2.skyhanni.utils.EntityUtils.canBeSeen
 import at.hannibal2.skyhanni.utils.EntityUtils.cleanName
 import at.hannibal2.skyhanni.utils.EntityUtils.isCorrupted
-import at.hannibal2.skyhanni.utils.EntityUtils.isRunic
 import at.hannibal2.skyhanni.utils.LocationUtils.distanceToPlayer
 import at.hannibal2.skyhanni.utils.LocationUtils.getBoxCenter
 import at.hannibal2.skyhanni.utils.LocationUtils.union
@@ -18,6 +17,7 @@ import at.hannibal2.skyhanni.utils.LorenzUtils
 import at.hannibal2.skyhanni.utils.LorenzUtils.baseMaxHealth
 import at.hannibal2.skyhanni.utils.MobUtils
 import at.hannibal2.skyhanni.utils.RegexUtils.matchMatcher
+import at.hannibal2.skyhanni.utils.compat.getNameAsString
 import at.hannibal2.skyhanni.utils.compat.getWholeInventory
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
@@ -114,7 +114,8 @@ class Mob(
     }
 
     val isCorrupted get() = !RiftApi.inRift() && baseEntity.isCorrupted() // Can change
-    val isRunic = !RiftApi.inRift() && baseEntity.isRunic() // Does not Change
+    val isRunic = !RiftApi.inRift() &&
+        armorStand?.getNameAsString()?.startsWith("§5") == true // Does not Change
 
     fun isInRender() = baseEntity.distanceToPlayer() < MobData.ENTITY_RENDER_RANGE_IN_BLOCKS
 

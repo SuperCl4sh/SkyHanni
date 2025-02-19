@@ -2,6 +2,8 @@ package at.hannibal2.skyhanni.features.combat.mobs
 
 import at.hannibal2.skyhanni.SkyHanniMod
 import at.hannibal2.skyhanni.api.event.HandleEvent
+import at.hannibal2.skyhanni.data.mob.Mob
+import at.hannibal2.skyhanni.events.MobEvent
 import at.hannibal2.skyhanni.events.entity.EntityHealthUpdateEvent
 import at.hannibal2.skyhanni.events.entity.EntityMaxHealthUpdateEvent
 import at.hannibal2.skyhanni.events.minecraft.SkyHanniRenderWorldEvent
@@ -28,6 +30,15 @@ object MobHighlight {
 
     private val config get() = SkyHanniMod.feature.combat.mobs
     private var arachne: EntityLivingBase? = null
+
+    @HandleEvent(onlyOnSkyblock = true)
+    fun onMobSpawn(event: MobEvent.Spawn.SkyblockMob) {
+
+        val mob = event.mob
+        if (config.runicMobHighlight && mob.isRunic && mob.mobType == Mob.Type.BASIC) {
+            mob.highlight(LorenzColor.LIGHT_PURPLE.toColor()) { config.runicMobHighlight }
+        }
+    }
 
     @HandleEvent(onlyOnSkyblock = true)
     fun onEntityHealthUpdate(event: EntityHealthUpdateEvent) {
