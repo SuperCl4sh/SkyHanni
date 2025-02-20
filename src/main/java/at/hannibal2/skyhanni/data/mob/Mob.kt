@@ -112,8 +112,10 @@ class Mob(
             else -> false
         }
     }
-
-    val isCorrupted get() = !RiftApi.inRift() && baseEntity.isCorrupted() // Can change
+    /**
+     * @property isCorrupted can change.
+     */
+    val isCorrupted get() = !RiftApi.inRift() && baseEntity.isCorrupted()
     /**
      * @property isRunic does not change.
      */
