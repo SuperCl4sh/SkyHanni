@@ -7,6 +7,7 @@ import at.hannibal2.skyhanni.config.commands.CommandRegistrationEvent
 import at.hannibal2.skyhanni.data.ItemAddManager
 import at.hannibal2.skyhanni.data.jsonobjects.repo.FishingProfitItemsJson
 import at.hannibal2.skyhanni.events.ItemAddEvent
+import at.hannibal2.skyhanni.events.OwnInventoryItemUpdateEvent
 import at.hannibal2.skyhanni.events.RepositoryReloadEvent
 import at.hannibal2.skyhanni.events.chat.SkyHanniChatEvent
 import at.hannibal2.skyhanni.events.fishing.FishingBobberCastEvent
@@ -16,9 +17,11 @@ import at.hannibal2.skyhanni.skyhannimodule.SkyHanniModule
 import at.hannibal2.skyhanni.test.command.ErrorManager
 import at.hannibal2.skyhanni.utils.ChatUtils
 import at.hannibal2.skyhanni.utils.DelayedRun
+import at.hannibal2.skyhanni.utils.ItemUtils.getInternalName
 import at.hannibal2.skyhanni.utils.LorenzUtils
 import at.hannibal2.skyhanni.utils.NeuInternalName
 import at.hannibal2.skyhanni.utils.NeuInternalName.Companion.toInternalName
+import at.hannibal2.skyhanni.utils.NeuInternalName.Companion.toInternalNames
 import at.hannibal2.skyhanni.utils.NumberUtil.addSeparators
 import at.hannibal2.skyhanni.utils.NumberUtil.formatInt
 import at.hannibal2.skyhanni.utils.NumberUtil.formatPercentage
@@ -26,6 +29,7 @@ import at.hannibal2.skyhanni.utils.NumberUtil.shortFormat
 import at.hannibal2.skyhanni.utils.RegexUtils.matchMatcher
 import at.hannibal2.skyhanni.utils.RenderDisplayHelper
 import at.hannibal2.skyhanni.utils.SimpleTimeMark
+import at.hannibal2.skyhanni.utils.SkyBlockItemModifierUtils.getItemUuid
 import at.hannibal2.skyhanni.utils.StringUtils
 import at.hannibal2.skyhanni.utils.collection.RenderableCollectionUtils.addSearchString
 import at.hannibal2.skyhanni.utils.renderables.Renderable
@@ -207,6 +211,31 @@ object FishingProfitTracker {
 
         DelayedRun.runDelayed(500.milliseconds) {
             tryAddItem(event.internalName, event.amount, command = false)
+        }
+    }
+
+    private val userEmptyBottles: MutableList<String> = mutableListOf()
+
+    private val emptyBottles = setOf(
+        "THUNDER_IN_A_BOTTLE_EMPTY",
+        "STORM_IN_A_BOTTLE_EMPTY",
+        "HURRICANE_IN_A_BOTTLE_EMPTY",
+    ).toInternalNames()
+
+    private val fullBottles = setOf(
+        "THUNDER_IN_A_BOTTLE",
+        "STORM_IN_A_BOTTLE",
+        "HURRICANE_IN_A_BOTTLE",
+    ).toInternalNames()
+
+    @HandleEvent(onlyOnSkyblock = true)
+    fun onInventoryUpdate(event: OwnInventoryItemUpdateEvent) {
+        val internalName = event.itemStack.getInternalName()
+        val uuid = event.itemStack.getItemUuid() ?: return
+        if (emptyBottles.contains(internalName)) {
+            userEmptyBottles.add(uuid)
+        } else if (userEmptyBottles.contains(uuid) && fullBottles.contains(internalName)) {
+            tryAddItem(internalName, 1, false)
         }
     }
 
