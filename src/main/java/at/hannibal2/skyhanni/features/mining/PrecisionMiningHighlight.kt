@@ -29,19 +29,17 @@ object PrecisionMiningHighlight {
     @HandleEvent(onlyOnSkyblock = true)
     fun onReceiveParticle(event: ReceiveParticleEvent) {
         if (!isEnabled()) return
-        if (!(event.type == EnumParticleTypes.CRIT || event.type == EnumParticleTypes.VILLAGER_HAPPY) ||
-            !Minecraft.getMinecraft().gameSettings.keyBindAttack.isKeyDown
-        ) return
+        if (!(event.type == EnumParticleTypes.CRIT)) return
 
         val mouseOverObject = Minecraft.getMinecraft().objectMouseOver ?: return
-        if (mouseOverObject.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return
+        //if (mouseOverObject.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return
 
         val particleBoundingBox = event.location.add(-0.12, -0.12, -0.12)
             .axisAlignedTo(event.location.clone().add(0.12, 0.12, 0.12))
 
         val blockBoundingBox = mouseOverObject.blockPos.toLorenzVec()
             .axisAlignedTo(mouseOverObject.blockPos.add(1.0, 1.0, 1.0).toLorenzVec())
-        if (!blockBoundingBox.intersectsWith(particleBoundingBox)) return
+        //if (!blockBoundingBox.intersectsWith(particleBoundingBox)) return
 
         lookingAtParticle = event.type == EnumParticleTypes.VILLAGER_HAPPY
         lastParticle = particleBoundingBox
