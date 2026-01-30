@@ -357,7 +357,7 @@ detekt {
 
 tasks.withType<Detekt>().configureEach {
     onlyIf {
-        target == ProjectTarget.MODERN_12105 && project.findProperty("skipDetekt") != "true"
+        target == ProjectTarget.MODERN_12105 && project.findProperty("skipDetekt") != "false"
     }
     jvmTarget = target.minecraftVersion.formattedJavaLanguageVersion
     outputs.cacheIf { false } // Custom rules won't work if cached

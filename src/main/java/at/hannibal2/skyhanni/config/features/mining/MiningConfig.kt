@@ -124,6 +124,11 @@ class MiningConfig {
     val gemstoneMoneyPerHour: GemstoneMoneyPerHourConfig = GemstoneMoneyPerHourConfig()
 
     @Expose
+    @ConfigOption(name = "Commission Features", desc = "")
+    @Accordion
+    val commissionFeatures: CommissionFeaturesConfig = CommissionFeaturesConfig()
+
+    @Expose
     @ConfigOption(name = "Highlight Commission Mobs", desc = "Highlight mobs that are part of active commissions.")
     @ConfigEditorBoolean
     @FeatureToggle
