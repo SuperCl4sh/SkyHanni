@@ -146,6 +146,8 @@ CI. Do not manually edit `docs/CHANGELOG.md` or `docs/FEATURES.md`. These files 
   the changelog, "fixed an inverted discount calculation" belongs in the **What** section.
 - Refer to a feature by its name and capitalize it, along with every SkyBlock proper noun. This includes the
   names that read like ordinary words, such as Hunting Box or Instance Chest Profit.
+- The builder removes double quotes from the main line of an entry, while extra info lines keep them. Write
+  feature names in the main line without quotes, and put a quoted chat message into an extra info line.
 
 Here is an explanation of which changes belong to each category:
 
